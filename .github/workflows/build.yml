@@ -1,0 +1,35 @@
+name: Build encrypted pack with mcrputil
+run-name: Build encrypted pack of PridePack
+on:
+  push:
+  workflow_dispatch:
+jobs:
+ build-pack:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout the repository.
+       uses: actions/checkout@v3
+     - name: Create & move files on seperate directory
+       run: mkdir PridePackRTX & mv * PridePackRTX/
+     - name: Download mcrputil.
+       run: "curl -sL https://github.com/valaphee/mcrputil/releases/latest/download/mcrputil -o mcrputil"
+     - name: chmod the mcrputil and create dist directory
+       run: "chmod +x ./mcrputil & mkdir PridePackRTX.dist"
+     - name: Build artifact
+       run: "./mcrputil encrypt PridePackRTX/ PridePackRTX.dist/"
+     - name: Create upload file and Archive files
+       run: "mkdir upload && zip -r ./upload/PridePackRTX.mcpack ./PridePackRTX.dist/"
+     - name: Move encryption key.
+       run: "mv ./PridePack.dist.key ./upload/encryption-key.txt"
+     - name: Upload build artifact
+       uses: actions/upload-artifact@v3
+       with:
+          name: PridePack.mcpack
+          path: PridePack.mcpack
+     - name: Upload pack encryption key
+       uses: actions/upload-artifact@v3
+       with:
+          name: PridePack.mcpack
+          path: ./upload/*
+     - name: Codespace Cleanup
+       run: "rm -rf *"
