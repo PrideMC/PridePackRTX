@@ -20,16 +20,16 @@ jobs:
      - name: Create upload file and Archive files
        run: "mkdir upload && zip -r ./upload/PridePackRTX.mcpack ./PridePackRTX.dist/"
      - name: Move encryption key.
-       run: "mv ./PridePack.dist.key ./upload/encryption-key.txt"
+       run: "mv ./PridePackRTX.dist/.key ./upload/PridePackRTX.key"
      - name: Upload build artifact
        uses: actions/upload-artifact@v3
        with:
-          name: PridePack.mcpack
-          path: PridePack.mcpack
+          name: PridePackRTX.mcpack
+          path: PridePackRTX.mcpack
      - name: Upload pack encryption key
        uses: actions/upload-artifact@v3
        with:
-          name: PridePack.mcpack
+          name: PridePackRTX.mcpack
           path: ./upload/*
      - name: Codespace Cleanup
        run: "rm -rf *"
