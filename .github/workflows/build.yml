@@ -21,11 +21,6 @@ jobs:
        run: "mkdir upload && zip -r ./upload/PridePackRTX.mcpack ./PridePackRTX.dist/"
      - name: Move encryption key.
        run: "mv ./PridePackRTX.dist/.key ./upload/PridePackRTX.key"
-     - name: Upload build artifact
-       uses: actions/upload-artifact@v3
-       with:
-          name: PridePackRTX.mcpack
-          path: PridePackRTX.mcpack
      - name: Upload pack encryption key
        uses: actions/upload-artifact@v3
        with:
